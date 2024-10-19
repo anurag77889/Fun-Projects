@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Age Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Want to know your age just by writing your name?</h1>
+        <input type="text" name="name" id="writeName" placeholder="Enter your name">
+        <button id="submitBtn" type="submit">Submit</button>
+        <p id="predictedAge"></p>
+    </div>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            let userName = document.getElementById('writeName').value;
+            let ageApi = `https://api.agify.io?name=${userName}`;
+            
+            fetch(ageApi)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('predictedAge').innerText = `The predicted age for the name ${userName} is ${data.age} years old.`;
+                })
+                .catch(error => {
+                    document.getElementById('predictedAge').innerText = 'Sorry, we could not predict your age. Please try again later.';
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>
